@@ -105,7 +105,6 @@ CREATE TABLE IF NOT EXISTS `hosp_fund`.`Consulta` (
   `idConsulta` INT NOT NULL AUTO_INCREMENT,
   `DataHora` DATETIME(6) NULL,
   `Valor` DECIMAL(5) NULL,
-  `Consulta_idConsulta` INT NOT NULL,
   PRIMARY KEY (`idConsulta`))
 ENGINE = InnoDB;
 
@@ -118,6 +117,7 @@ CREATE TABLE IF NOT EXISTS `hosp_fund`.`Medicamento` (
   `Nome` VARCHAR(45) NULL,
   `Quantidade` INT NULL,
   `Instrucoes` VARCHAR(45) NULL,
+  `Consulta_idConsulta` INT NOT NULL,
   PRIMARY KEY (`idMedicamento`))
 ENGINE = InnoDB;
 
@@ -224,6 +224,7 @@ CREATE TABLE IF NOT EXISTS `hosp_fund`.`Quarto` (
   `idQuarto` INT NOT NULL AUTO_INCREMENT,
   `Num` INT NULL,
   `Tipo` VARCHAR(45) NULL,
+  `valor_diária` DECIMAL (8,2),
   `Enfermeiro_idEnfermeiro` INT NOT NULL,
   PRIMARY KEY (`idQuarto`),
   CONSTRAINT `fk_Quarto_Enfermeiro1`
@@ -245,44 +246,6 @@ CREATE TABLE IF NOT EXISTS `hosp_fund`.`Internação` (
   `procedimento` VARCHAR(45) NULL,
   PRIMARY KEY (`idInternação`))
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `hosp_fund`.`Tipo_Quarto`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `hosp_fund`.`Tipo_Quarto` (
-  `idQuarto` INT NOT NULL AUTO_INCREMENT,
-  `descrição` VARCHAR(45) NULL,
-  `valor_diária` INT NULL,
-  `Quarto_idQuarto` INT NOT NULL,
-  PRIMARY KEY (`idQuarto`),
-  CONSTRAINT `fk_Tipo_Quarto_Quarto1`
-    FOREIGN KEY (`Quarto_idQuarto`)
-    REFERENCES `hosp_fund`.`Quarto` (`idQuarto`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `hosp_fund`.`Internação_has_Enfermeiro`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `hosp_fund`.`Internação_has_Enfermeiro` (
-  `Internação_idInternação` INT NOT NULL,
-  `Enfermeiro_idEnfermeiro` INT NOT NULL,
-  PRIMARY KEY (`Internação_idInternação`, `Enfermeiro_idEnfermeiro`),
-  CONSTRAINT `fk_Internação_has_Enfermeiro_Internação1`
-    FOREIGN KEY (`Internação_idInternação`)
-    REFERENCES `hosp_fund`.`Internação` (`idInternação`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Internação_has_Enfermeiro_Enfermeiro1`
-    FOREIGN KEY (`Enfermeiro_idEnfermeiro`)
-    REFERENCES `hosp_fund`.`Enfermeiro` (`idEnfermeiro`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `hosp_fund`.`Paciente_has_Quarto`
