@@ -105,6 +105,7 @@ CREATE TABLE IF NOT EXISTS `hosp_fund`.`Consulta` (
   `idConsulta` INT NOT NULL AUTO_INCREMENT,
   `DataHora` DATETIME(6) NULL,
   `Valor` DECIMAL(5) NULL,
+  `Consulta_idConsulta` INT NOT NULL,
   PRIMARY KEY (`idConsulta`))
 ENGINE = InnoDB;
 
